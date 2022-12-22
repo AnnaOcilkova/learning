@@ -1,0 +1,48 @@
+<h4 class="mb-3">Add new user</h4>
+<form
+  [formGroup]="profileForm"
+  (ngSubmit)="onSubmitForm()"
+  #profileFormHash="ngForm"
+  [attr.id]="parentName"
+>
+
+    <label for="firstName" class="col-1 my-2">First Name: </label>
+    <input type="text" id="firstName" formControlName="firstName" class="col-2 rounded border border-1 border-secondary mx-1" /><br />
+    <label for="lastName" class="col-1 my-2">Last Name: </label>
+    <input id="lastName" type="text" formControlName="lastName" class="col-2 rounded border border-1 border-secondary mx-1" /><br />
+
+    <div *ngIf="parentName === 'user-list'" >
+    <label for="userName" class="col-1 my-2">UserName: </label>
+    <input id="userName" type="text" formControlName="userName" class="col-2 rounded border border-1 border-secondary mx-1" /><br />
+    <label for="password" class="col-1 my-2">Password: </label>
+    <input id="password" type="text" formControlName="password" class="col-2 rounded border border-1 border-secondary mx-1" /><br />
+
+
+    <label for="email" class="col-1 my-2">E-mail:</label>
+    <input id="email" type="text" formControlName="email" class="col-2 rounded border border-1 border-secondary mx-1" /><br />
+  </div>
+  <button
+  *ngIf="parentName === 'user-list'"
+    [disabled]="profileFormHash.form.invalid"
+    type="submit"
+    class="btn btn-outline-secondary col-1"
+  >
+    submit
+  </button>
+  <button *ngIf="parentName === 'user-list'" type="button" class="btn btn-outline-secondary col-2 mx-1" (click)="addDefaultUser()">Add some default user</button>
+</form>
+
+<p>Form Status: {{ profileForm.status }}</p>
+
+<div
+  *ngIf="lastName!.invalid && (lastName!.dirty || lastName!.touched)"
+  class="red-text"
+>
+  <div *ngIf="lastName!.errors?.['required']">Name is required.</div>
+  <div *ngIf="lastName!.errors?.['minlength']">
+    Name must be at least 2 characters long.
+  </div>
+  <!-- <div *ngIf="lastName!.errors?.['forbiddenName']">
+    Name cannot be Bob.
+  </div> -->
+</div>
